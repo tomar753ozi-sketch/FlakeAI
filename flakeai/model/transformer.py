@@ -23,7 +23,7 @@ class ModelConfig:
     d_model: int = 768
     n_heads: int = 12
     n_kv_heads: int = 4
-    n_layers: int = 12
+    n_layers: int = 16
     d_ff: int = 2048
     max_seq_len: int = 256
     dropout: float = 0.1
