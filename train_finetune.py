@@ -84,8 +84,6 @@ def train():
         dataloader_num_workers=2,
         remove_unused_columns=False,
         report_to="none",
-        load_best_model_at_end=True,
-        metric_for_best_model="loss",
     )
 
     trainer = Trainer(
