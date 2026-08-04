@@ -1,7 +1,7 @@
-"""FlakeAI Fine-tune Script - GPT-2 Base
+"""FlakeAI Fine-tune Script - Turkish GPT-2 Base
 
-GPT-2'yi senin Türkçe + Kod + İngilizce verinle inceltiyor.
-Sonuç: Türkçe konuşan, kod yazabilen bir chatbot.
+ytu-ce-cosmos/turkish-gpt2 modelini senin verinle inceltiyor.
+Sonuç: Türkçe konuşan, kod yazabilen chatbot.
 """
 import os
 import torch
@@ -31,16 +31,16 @@ def load_data(data_path="data/training.txt", max_samples=60000):
 
 def train():
     print("=" * 60)
-    print("FlakeAI Fine-tune (GPT-2 Base)")
+    print("FlakeAI Fine-tune (Turkish GPT-2 Base)")
     print("=" * 60)
 
     # Veri
     texts = load_data()
     dataset = Dataset.from_dict({"text": texts})
 
-    # Model & Tokenizer
-    print("\nModel yukleniyor...")
-    model_name = "gpt2"
+    # Model & Tokenizer - Turkish GPT-2
+    print("\nModel yukleniyor... (ytu-ce-cosmos/turkish-gpt2)")
+    model_name = "ytu-ce-cosmos/turkish-gpt2"
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     tokenizer.pad_token = tokenizer.eos_token
 
