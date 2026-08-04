@@ -474,24 +474,22 @@ def prepare_data():
             english.extend(lines[:10000])
             print(f"  WikiText-2: {len(lines[:10000])} satır")
 
+    # WikiText-103 - alternatif kaynak
     wt103 = CACHE_DIR / "wikitext103.txt"
     if not wt103.exists():
-        zip_path = CACHE_DIR / "wikitext103.zip"
-        download_file(
-            "https://huggingface.co/datasets/Salesforce/wikitext/resolve/main/wikitext-103-raw-v1.zip",
-            zip_path, "WikiText-103"
-        )
-        if zip_path.exists():
-            import zipfile, shutil
-            try:
-                with zipfile.ZipFile(str(zip_path), 'r') as z:
-                    z.extractall(str(CACHE_DIR))
-                    for name in z.namelist():
-                        if 'train' in name.lower() and name.endswith('.txt'):
-                            shutil.move(str(CACHE_DIR / name), str(wt103))
-                            break
-            except Exception as e:
-                print(f"  Zip hatasi: {e}")
+        # HuggingFace datasets ile indir
+        try:
+            from datasets import load_dataset
+            ds = load_dataset("Salesforce/wikitext", "wikitext-103-raw-v1", split="train")
+            with open(wt103, "w", encoding="utf-8") as f:
+                for item in ds:
+                    text = item["text"].strip()
+                    if text and len(text) > 15:
+                        f.write(text + "\n")
+            print(f"  WikiText-103 indirildi (datasets)")
+        except Exception as e:
+            print(f"  WikiText-103 indirilemedi: {e}")
+            print("  WikiText-2 ile devam ediliyor...")
 
     if wt103.exists():
         with open(wt103, "r", encoding="utf-8", errors="ignore") as f:
